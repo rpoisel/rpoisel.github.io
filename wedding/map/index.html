@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Anfahrtsbeschreibung zu unserer Hochzeit</title>
-	<meta charset="utf-8" />
+    <title>Anfahrtsbeschreibung zu unserer Hochzeit</title>
+    <meta charset="utf-8" />
 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
         <!-- hab ich's doch gewusst, dass ihr euch das anseht ;-) -->
 
@@ -12,36 +12,47 @@
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
 </head>
 <body>
-	<div id="map"></div>
+    <div id="map"></div>
 
-        <!-- <script src="../dist/leaflet.js"></script> -->
-        <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js?2"></script>
-	<script>
-		var map = L.map('map').setView([48.18459, 15.64022], 17);
-                map.doubleClickZoom.disable();
-                map.scrollWheelZoom.disable();
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js?2"></script>
+    <script>
+        var map = L.map('map').setView([48.18459, 15.64022], 17);
+        L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
+                {
+                    attribution: 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
+                }).addTo(map);
 
-                L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
-			attribution: 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
-		}).addTo(map);
+        var LeafIcon = L.Icon.extend({
+            options: {
+                //shadowUrl: '../docs/images/leaf-shadow.png',
+                //iconSize:     [50, 50],
+                //shadowSize:   [50, 64],
+                iconAnchor:   [30, 30],
+                //shadowAnchor: [4, 62],
+                popupAnchor:  [-3, -25]
+            }
+        });
 
-		var LeafIcon = L.Icon.extend({
-			options: {
-				//shadowUrl: '../docs/images/leaf-shadow.png',
-				iconSize:     [50, 50],
-				//shadowSize:   [50, 64],
-				//iconAnchor:   [22, 94],
-				//shadowAnchor: [4, 62],
-				popupAnchor:  [-3, -25]
-			}
-		});
+        var quercherIcon = new LeafIcon({iconUrl: 'img/quercher.png'});
+        var kircheIcon = new LeafIcon({iconUrl: 'img/kirche.png'});
+        var quercherMarker = L.marker([48.1831, 15.63780], {icon: quercherIcon}).bindPopup("Ort der Sause");
+        var kircheMarker = L.marker([48.18297, 15.6388], {icon: kircheIcon}).bindPopup("Ort der Trause");
+        quercherMarker.addTo(map);
+        kircheMarker.addTo(map);
 
-		var quercherIcon = new LeafIcon({iconUrl: 'img/quercher.png'});
-		var kircheIcon = new LeafIcon({iconUrl: 'img/kirche.png'});
+        map.on("zoomend", function(zoomArg) {
+                if (zoomArg.target._zoom >= 17)
+                {
+                    quercherMarker.setOpacity(1);
+                    kircheMarker.setOpacity(1);
+                }
+                else
+                {
+                    quercherMarker.setOpacity(0);
+                    kircheMarker.setOpacity(0);
+                }
+            });
 
-		L.marker([48.18312, 15.63777], {icon: quercherIcon}).bindPopup("Ort der Sause").addTo(map);
-		L.marker([48.18300, 15.6389], {icon: kircheIcon}).bindPopup("Ort der Trause").addTo(map);
-
-	</script>
+    </script>
 </body>
 </html>
