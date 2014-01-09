@@ -35,7 +35,7 @@ function instantiateMarkers(items)
     {
         var newIcon = new CustomIcon({iconUrl: items[i].iconUrl});
         var newMarker = L.marker([items[i].lat, items[i].lon], {icon: newIcon});
-        newMarker.bindPopup(items[0].msg);
+        newMarker.bindPopup(items[i].msg);
         markerArray.push(newMarker);
     }
     return markerArray;
