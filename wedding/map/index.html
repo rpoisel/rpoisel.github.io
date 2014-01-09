@@ -16,43 +16,80 @@
 
     <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js?2"></script>
     <script>
-        var map = L.map('map').setView([48.18459, 15.64022], 17);
-        L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
+
+var CustomIcon = L.Icon.extend({
+    options: {
+        //shadowUrl: '../docs/images/leaf-shadow.png',
+        //iconSize:     [50, 50],
+        //shadowSize:   [50, 64],
+        iconAnchor:   [30, 30],
+        //shadowAnchor: [4, 62],
+        popupAnchor:  [-3, -25]
+    }
+});
+
+function instantiateMarkers(items)
+{
+    var markerArray = new Array();
+    for (i = 0; i < items.length; i++)
+    {
+        var newIcon = new CustomIcon({iconUrl: items[i].iconUrl});
+        var newMarker = L.marker([items[i].lat, items[i].lon], {icon: newIcon});
+        newMarker.bindPopup(items[0].msg);
+        markerArray.push(newMarker);
+    }
+    return markerArray;
+}
+
+function addMarkerLayers(markers, map)
+{
+    for (i = 0; i < markers.length; i++)
+    {
+        map.addLayer(markers[i]);
+    }
+}
+
+function removeMarkerLayers(markers, map)
+{
+    for (i = 0; i < markers.length; i++)
+    {
+        map.removeLayer(markers[i]);
+    }
+}
+
+var map = L.map('map').setView([48.18459, 15.64022], 17);
+L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
+        {
+            attribution: 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
+        }).addTo(map);
+
+var items = [
+            {"lat": 48.1831, "lon": 15.63780, "iconUrl": "img/quercher.png", "msg": "Ort der Sause"},
+            {"lat": 48.18297, "lon": 15.6388, "iconUrl": "img/kirche.png", "msg": "Ort der Trause"}
+            ];
+
+var markers = instantiateMarkers(items);
+addMarkerLayers(markers, map);
+var added = true;
+
+map.on("zoomend", function(zoomArg) {
+        if (zoomArg.target._zoom >= 17)
+        {
+                if (!added)
                 {
-                    attribution: 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
-                }).addTo(map);
-
-        var LeafIcon = L.Icon.extend({
-            options: {
-                //shadowUrl: '../docs/images/leaf-shadow.png',
-                //iconSize:     [50, 50],
-                //shadowSize:   [50, 64],
-                iconAnchor:   [30, 30],
-                //shadowAnchor: [4, 62],
-                popupAnchor:  [-3, -25]
-            }
-        });
-
-        var quercherIcon = new LeafIcon({iconUrl: 'img/quercher.png'});
-        var kircheIcon = new LeafIcon({iconUrl: 'img/kirche.png'});
-        var quercherMarker = L.marker([48.1831, 15.63780], {icon: quercherIcon}).bindPopup("Ort der Sause");
-        var kircheMarker = L.marker([48.18297, 15.6388], {icon: kircheIcon}).bindPopup("Ort der Trause");
-        quercherMarker.addTo(map);
-        kircheMarker.addTo(map);
-
-        map.on("zoomend", function(zoomArg) {
-                if (zoomArg.target._zoom >= 17)
-                {
-                    quercherMarker.setOpacity(1);
-                    kircheMarker.setOpacity(1);
+                    addMarkerLayers(markers, map);
+                    added = true;
                 }
-                else
+        }
+        else
+        {
+                if (added)
                 {
-                    quercherMarker.setOpacity(0);
-                    kircheMarker.setOpacity(0);
+                    removeMarkerLayers(markers, map);
+                    added = false;
                 }
-            });
-
+        }
+});
     </script>
 </body>
 </html>
