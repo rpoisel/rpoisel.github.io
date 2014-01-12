@@ -65,7 +65,7 @@ function removeMarkerLayers(markers, map)
 var map = L.map('map').setView([48.18459, 15.64022], 17);
 L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
 {
-    attribution: 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
+    attribution: 'Map data &copy; 2014 OpenStreetMap contributors',
 }).addTo(map);
 
 var markers = instantiateMarkers(items);
