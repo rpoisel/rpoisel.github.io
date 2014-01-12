@@ -1,3 +1,5 @@
+"use strict";
+
 var items = [
 {
     "lat": 48.1831,
