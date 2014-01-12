@@ -1,0 +1,14 @@
+[
+    {
+        "lat": 48.1831,
+        "lon": 15.6378,
+        "iconUrl": "img/quercher.png",
+        "msg": "Ort der Sause"
+    },
+    {
+        "lat": 48.18297,
+        "lon": 15.6388,
+        "iconUrl": "img/kirche.png",
+        "msg": "Ort der Trause"
+    }
+]

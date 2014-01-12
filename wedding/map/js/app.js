@@ -1,18 +1,9 @@
 "use strict";
 
-var items = [
+$.getJSON("data/items.json", function(data)
 {
-    "lat": 48.1831,
-    "lon": 15.63780,
-    "iconUrl": "img/quercher.png",
-    "msg": "Ort der Sause"
-},
-{
-    "lat": 48.18297,
-    "lon": 15.6388,
-    "iconUrl": "img/kirche.png",
-    "msg": "Ort der Trause"
-}];
+    console.log(data);
+});
 
 var CustomIcon = L.Icon.extend(
 {
@@ -30,7 +21,7 @@ var CustomIcon = L.Icon.extend(
 function instantiateMarkers(items)
 {
     var markerArray = new Array();
-    _.each(items, function(element)
+    $.each(items, function(index, element)
     {
         var newIcon = new CustomIcon(
         {
@@ -48,7 +39,7 @@ function instantiateMarkers(items)
 
 function addMarkerLayers(markers, map)
 {
-    _.each(markers, function(marker)
+    $.each(markers, function(index, marker)
     {
         map.addLayer(marker);
     });
@@ -56,38 +47,41 @@ function addMarkerLayers(markers, map)
 
 function removeMarkerLayers(markers, map)
 {
-    _.each(markers, function(marker)
+    $.each(markers, function(index, marker)
     {
         map.removeLayer(marker);
     });
 }
 
-var map = L.map('map').setView([48.18459, 15.64022], 17);
-L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
+function main(items)
 {
-    attribution: 'Map data &copy; 2014 OpenStreetMap contributors',
-}).addTo(map);
-
-var markers = instantiateMarkers(items);
-addMarkerLayers(markers, map);
-var added = true;
-
-map.on("zoomend", function (zoomArg)
-{
-    if (zoomArg.target._zoom >= 17)
+    var map = L.map('map').setView([48.18459, 15.64022], 17);
+    L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
     {
-        if (!added)
-        {
-            addMarkerLayers(markers, map);
-            added = true;
-        }
-    }
-    else
+        attribution: 'Map data &copy; 2014 OpenStreetMap contributors',
+    }).addTo(map);
+
+    var markers = instantiateMarkers(items);
+    var added = true;
+    addMarkerLayers(markers, map);
+
+    map.on("zoomend", function (zoomArg)
     {
-        if (added)
+        if (zoomArg.target._zoom >= 17)
         {
-            removeMarkerLayers(markers, map);
-            added = false;
+            if (!added)
+            {
+                addMarkerLayers(markers, map);
+                added = true;
+            }
         }
-    }
-});
+        else
+        {
+            if (added)
+            {
+                removeMarkerLayers(markers, map);
+                added = false;
+            }
+        }
+    });
+}
