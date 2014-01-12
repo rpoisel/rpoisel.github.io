@@ -2,7 +2,7 @@
 
 $.getJSON("data/items.json", function(data)
 {
-    console.log(data);
+    main(data);
 });
 
 var CustomIcon = L.Icon.extend(
