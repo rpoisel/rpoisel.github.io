@@ -3,12 +3,16 @@
         "lat": 48.1831,
         "lon": 15.6378,
         "iconUrl": "img/quercher.png",
-        "msg": "Ort der Sause"
+        "name": "Gasthaus Gwercher",
+        "picture": "http://www.gwercher.at/uploads/pics/Vorderansicht_02.gif",
+        "description": "Zum Gwercher. WirZhaus Zum Gwercher Schiffmannstra&szlig;e 98 3100 St. P&ouml;lten - Stattersdorf. Tel: +43 (0) 2742/23110. Fax: +43 (0) 2742/22784"
     },
     {
         "lat": 48.18297,
         "lon": 15.6388,
         "iconUrl": "img/kirche.png",
-        "msg": "Ort der Trause"
+        "name": "Milleniumskirche Stattersdorf",
+        "picture": "http://www.architektur-noe.at/class/bildklein.php?id=341",
+        "description": "Die Milleniumskirche in Stattersdorf, einem vormals l&auml;ndlich gepr&auml;gten Vorort von St. P&oumllten, steht aufgrund ihrer Lage in einer Winkelsymmetrale zwischen der Domkirche im Zentrum der Landeshauptstadt und dem &oumlrtlichen Friedhof."
     }
 ]

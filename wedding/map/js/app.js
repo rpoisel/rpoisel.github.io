@@ -31,7 +31,12 @@ function instantiateMarkers(items)
         {
             icon: newIcon
         });
-        newMarker.bindPopup(element.msg);
+        newMarker.bindPopup("<div class='infobox'>" +
+                          "<h2>"+element.name+"</h2>" +
+                          "<img src='" + element.picture +"' class='writerpic'/>"+
+                          "<p class='writerdes'>"+element.description+"</p>" +
+                          "<div style='clear:both;'></div>"+
+                          "</div>");
         markerArray.push(newMarker);
     });
     return markerArray;
