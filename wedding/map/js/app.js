@@ -18,15 +18,28 @@ var CustomIcon = L.Icon.extend(
     }
 });
 
-function instantiateMarkers(items)
+function instantiateMarkers(items, zoomLevel)
 {
     var markerArray = new Array();
+    var newIcon = null;
     $.each(items, function(index, element)
     {
-        var newIcon = new CustomIcon(
+        if (zoomLevel >= 17)
         {
-            iconUrl: element.iconUrl
-        });
+            newIcon = new CustomIcon(
+            {
+                iconUrl: element.iconUrl
+            });
+        }
+        else
+        {
+            newIcon = L.AwesomeMarkers.icon(
+            {
+                icon: element.iconType,
+                markerColor: element.color,
+                prefix: 'fa',
+            });
+        }
         var newMarker = L.marker([element.lat, element.lon],
         {
             icon: newIcon
@@ -60,33 +73,26 @@ function removeMarkerLayers(markers, map)
 
 function main(items)
 {
-    var map = L.map('map').setView([48.18459, 15.64022], 17);
+    var map = L.map('map');
+    var added = true;
+    var markers = null;
+
+    map.on("load", function (loadArg)
+    {
+        markers = instantiateMarkers(items, loadArg.target._zoom);
+        addMarkerLayers(markers, map);
+    });
+
+    map.on("zoomend", function (zoomArg)
+    {
+        removeMarkerLayers(markers, map);
+        markers = instantiateMarkers(items, zoomArg.target._zoom);
+        addMarkerLayers(markers, map);
+    });
+
+    map.setView([48.18459, 15.64022], 17);
     L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
     {
         attribution: 'Map data &copy; 2014 OpenStreetMap contributors',
     }).addTo(map);
-
-    var markers = instantiateMarkers(items);
-    var added = true;
-    addMarkerLayers(markers, map);
-
-    map.on("zoomend", function (zoomArg)
-    {
-        if (zoomArg.target._zoom >= 17)
-        {
-            if (!added)
-            {
-                addMarkerLayers(markers, map);
-                added = true;
-            }
-        }
-        else
-        {
-            if (added)
-            {
-                removeMarkerLayers(markers, map);
-                added = false;
-            }
-        }
-    });
 }
