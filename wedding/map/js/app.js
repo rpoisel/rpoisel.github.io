@@ -69,7 +69,7 @@ function instantiatePaths(paths)
         var newPath = L.polyline(pointList,
             {
                 color: element.color,
-                weight: 3,
+                weight: 6,
                 oppacity: 0.5,
                 smoothFactor: 1
             });
