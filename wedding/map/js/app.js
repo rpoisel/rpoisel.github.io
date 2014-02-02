@@ -40,7 +40,7 @@ function instantiateMarkers(items, zoomLevel)
                 prefix: 'fa',
             });
         }
-        var newMarker = L.marker([element.lat, element.lon],
+        var newMarker = L.marker([element.lat, element.lng],
         {
             icon: newIcon
         });
@@ -53,6 +53,35 @@ function instantiateMarkers(items, zoomLevel)
         markerArray.push(newMarker);
     });
     return markerArray;
+}
+
+function instantiatePaths(paths)
+{
+    var pathsArray = new Array();
+
+    $.each(paths, function(index, element)
+    {
+        var pointList = new Array();
+        $.each(element.points, function(index, point)
+        {
+            pointList.push(L.latLng(point.lat, point.lng));
+        });
+        var newPath = L.polyline(pointList,
+            {
+                color: element.color,
+                weight: 3,
+                oppacity: 0.5,
+                smoothFactor: 1
+            });
+        newPath.bindPopup("<div class='infobox'>" +
+                          "<h2>"+element.name+"</h2>" +
+                          "<img src='" + element.picture +"' class='writerpic'/>"+
+                          "<p class='writerdes'>"+element.description+"</p>" +
+                          "<div style='clear:both;'></div>"+
+                          "</div>");
+        pathsArray.push(newPath);
+    });
+    return pathsArray;
 }
 
 function addMarkerLayers(markers, map)
@@ -71,26 +100,40 @@ function removeMarkerLayers(markers, map)
     });
 }
 
-function main(items)
+function addPathLayers(p, map)
+{
+    $.each(p, function(index, path)
+    {
+        map.addLayer(path);
+    });
+}
+
+function main(data)
 {
     var map = L.map('map');
     var added = true;
     var markers = null;
+    var paths = null;
 
     map.on("load", function (loadArg)
     {
-        markers = instantiateMarkers(items, loadArg.target._zoom);
+        // add items to be shown to map
+        markers = instantiateMarkers(data.items, loadArg.target._zoom);
         addMarkerLayers(markers, map);
+
+        // add paths
+        paths = instantiatePaths(data.paths);
+        addPathLayers(paths, map);
     });
 
     map.on("zoomend", function (zoomArg)
     {
         removeMarkerLayers(markers, map);
-        markers = instantiateMarkers(items, zoomArg.target._zoom);
+        markers = instantiateMarkers(data.items, zoomArg.target._zoom);
         addMarkerLayers(markers, map);
     });
 
-    map.setView([48.18459, 15.64022], 17);
+    map.setView(data.config.center, data.config.zoomLevel);
     L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
     {
         attribution: 'Map data &copy; 2014 OpenStreetMap contributors',
