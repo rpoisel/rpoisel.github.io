@@ -2,7 +2,27 @@
 
 $.getJSON("data/items.json", function(data)
 {
-    main(data);
+    var map = L.PartyMap.map('map');
+    var added = true;
+    var markers = null;
+    var paths = null;
+
+    map.on("load", function (loadArg)
+    {
+        map.addPaths(data.paths);
+    });
+
+    map.on("zoomend", function (zoomArg)
+    {
+        map.removeMarkers();
+        map.addMarkers(data.items);
+    });
+
+    map.setView(data.config.center, data.config.zoomLevel);
+    L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
+    {
+        attribution: 'Map data &copy; 2014 OpenStreetMap contributors',
+    }).addTo(map);
 });
 
 (function (window, document, undefined) {
@@ -133,28 +153,3 @@ $.getJSON("data/items.json", function(data)
         return new L.PartyMap.Map(options);
     };
 }(this, document));
-
-function main(data)
-{
-    var map = L.PartyMap.map('map');
-    var added = true;
-    var markers = null;
-    var paths = null;
-
-    map.on("load", function (loadArg)
-    {
-        map.addPaths(data.paths);
-    });
-
-    map.on("zoomend", function (zoomArg)
-    {
-        map.removeMarkers();
-        map.addMarkers(data.items);
-    });
-
-    map.setView(data.config.center, data.config.zoomLevel);
-    L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
-    {
-        attribution: 'Map data &copy; 2014 OpenStreetMap contributors',
-    }).addTo(map);
-}
