@@ -5,25 +5,34 @@ $.getJSON("data/items.json", function(data)
     main(data);
 });
 
-var CustomIcon = L.Icon.extend(
-{
-    options:
+(function (window, document, undefined) {
+    'use strict';
+    L.PartyIcon = {};
+    L.PartyIcon.version = '1.0';
+    L.PartyIcon.Icon = L.Icon.extend(
     {
-        //shadowUrl: '../docs/images/leaf-shadow.png',
-        //iconSize:     [50, 50],
-        //shadowSize:   [50, 64],
-        iconAnchor: [30, 30],
-        //shadowAnchor: [4, 62],
-        popupAnchor: [-3, -25]
-    }
-});
+        options:
+        {
+            //shadowUrl: '../docs/images/leaf-shadow.png',
+            //iconSize:     [50, 50],
+            //shadowSize:   [50, 64],
+            iconAnchor: [30, 30],
+            //shadowAnchor: [4, 62],
+            popupAnchor: [-3, -25]
+        }
+    });
+    L.PartyIcon.icon = function(options)
+    {
+        return new L.PartyIcon.Icon(options);
+    };
+}(this, document));
 
 (function (window, document, undefined) {
     'use strict';
     L.PartyMap = {};
     L.PartyMap.version = '1.0';
-    L.PartyMap.Map = L.Map.extend({
-
+    L.PartyMap.Map = L.Map.extend(
+    {
         addMarkers: function (items)
         {
             var markerArray = new Array();
@@ -33,7 +42,7 @@ var CustomIcon = L.Icon.extend(
             {
                 if (_theMap._zoom >= 17)
                 {
-                    newIcon = new CustomIcon(
+                    newIcon = L.PartyIcon.icon(
                     {
                         iconUrl: element.iconUrl
                     });
