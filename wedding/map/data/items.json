@@ -7,9 +7,9 @@
             "iconUrl": "img/quercher.png",
             "iconType": "glass",
             "color": "red",
-            "name": "Gasthaus Gwercher",
+            "name": "Gasthaus &quot;Zum Gwercher&quot;",
             "picture": "http://www.gwercher.at/uploads/pics/Vorderansicht_02.gif",
-            "description": "Zum Gwercher. WirZhaus Zum Gwercher Schiffmannstra&szlig;e 98 3100 St. P&ouml;lten - Stattersdorf. Tel: +43 (0) 2742/23110. Fax: +43 (0) 2742/22784"
+            "description": "Im Gasthaus &quot;Zum Gwercher&quot; findet die Hochzeitsfeier statt. Der Innenhof ist ausschlie&szlig;lich f&uuml;r die Hochzeitsgesellschaft reserviert. Wir freuen uns schon auf gemeinsames Essen, Trinken und Tanzen!"
         },
         {
             "lat": 48.18297,
@@ -19,7 +19,7 @@
             "color": "blue",
             "name": "Milleniumskirche Stattersdorf",
             "picture": "img/milleniumskirche.jpg",
-            "description": "Die Milleniumskirche in Stattersdorf, einem vormals l&auml;ndlich gepr&auml;gten Vorort von St. P&oumllten, steht aufgrund ihrer Lage in einer Winkelsymmetrale zwischen der Domkirche im Zentrum der Landeshauptstadt und dem &oumlrtlichen Friedhof."
+            "description": "In der Milleniumskirche in Stattersdorf wird die Trauung stattfinden. Treffpunkt ist um 14 Uhr vor der Kirche, um 14:30 geht's los!<br />Wenn ihr mit dem Auto kommt, k&ouml;nnt ihr in den Stra&szlig;en rund um die Kirche parken. Wir freuen uns aber &uuml;ber alle, die mit dem Fahrrad kommen, damit wir dann ein sch&ouml;nes Gruppenbild machen k&ouml;nnen!<br /> P.S. ein paar Fahrr&auml;der k&ouml;nnen wir f&uuml;r die Nicht-St. P&ouml;ltner zur Verf&uuml;gung stellen - bei Interesse bitte melden."
         },
         {
             "lat": 48.1862,
@@ -29,7 +29,7 @@
             "color": "green",
             "name": "Haus der Poisels",
             "picture": "img/poisel_haus.jpg",
-            "description": "Unser Haus in Stattersdorf ..."
+            "description": "In unserem (hoffentlich bis dahin) frisch begr&uuml;nten Garten wollen wir mit euch ansto&szlig;en. Die Gratulation findet hier statt. Einer Hausbesichtigung steht nat&uuml;rlich nichts im Wege.<br />Bei Schlechtwetter wird die Agape im Pfarrhof der Milleniumskirche stattfinden."
         }
     ],
     "paths":
